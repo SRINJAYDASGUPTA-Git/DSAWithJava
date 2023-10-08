@@ -22,7 +22,6 @@ public class Stack<T> {
             throw new UnderflowException();
         }
         T data = stack.get(top);
-        stack.remove(top);
         top--;
         return data;
     }

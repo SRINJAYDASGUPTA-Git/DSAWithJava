@@ -1,18 +1,21 @@
-import java.util.*;
-public class Queue<T> {
+import java.util.ArrayList;
+
+public class CircularQueue<T> {
     ArrayList<T> queue = new ArrayList<>();
     int front, rear, size;
-    public Queue(int size){
+    public CircularQueue(int size){
         this.size = size;
         front = rear = -1;
     }
 
     public void enQueue(T data)throws OverflowException{
-        if(rear == size - 1)
+        if(rear == size - 1 && front == 0)
             throw new OverflowException();
         else if(isEmpty()){
             front = rear = 0;
         }
+        else if(rear == size-1 && front != 0)
+            rear = 0;
         else
             rear ++;
         queue.add(data);
@@ -23,7 +26,9 @@ public class Queue<T> {
         T popped = queue.get(front);
         if(isEmpty())
             throw new UnderflowException();
-        else if(front == rear)
+        else if(front == size-1)
+            front = 0;
+        else if(front  == rear)
             front = rear = -1;
         else
             front = front + 1;
@@ -31,30 +36,22 @@ public class Queue<T> {
     }
 
     public void display(){
-        for(int i = front; i<=rear; i++)
+        if(front > rear){
+            for(int i = front; i<size; i++)
+                System.out.print(queue.get(i)+" ");
+            for(int i = 0; i<=rear; i++)
+                System.out.print(queue.get(i)+" ");
+        }
+        else
+        {
+            for(int i = front; i<=rear; i++)
             System.out.print(queue.get(i)+" ");
+        }
         System.out.println();
     }
 
     public boolean isEmpty(){
         return(front == -1 && rear == -1);
     }
-
-    public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<>(5);
-        try {
-            queue.enQueue(1);
-            queue.enQueue(2);
-            queue.enQueue(3);
-            queue.enQueue(4);
-            queue.display();
-            System.out.println(queue.deQueue());
-            System.out.println(queue.deQueue());
-            queue.display();
-        } catch (OverflowException e) {
-            System.out.println("Queue is full");
-        } catch (UnderflowException e) {
-            System.out.println("Queue is empty");
-        }
-    }
+    
 }
