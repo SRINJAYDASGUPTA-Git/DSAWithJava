@@ -17,7 +17,7 @@ public class LinkedList<T> {
         this.size = 0;
     }
 
-    public void add(T data) {
+    public void add(T data) {    
         Node<T> newNode = new Node<>(data);
         if (head == null) {
             head = newNode;
@@ -61,6 +61,22 @@ public class LinkedList<T> {
             return;
         }
         head = head.next;
+        size--;
+    }
+
+    public void removeAtEnd(){
+        if(head == null){
+            return;
+        }
+        if(head.next == null){
+            head = null;
+            return;
+        }
+        Node<T> current = head;
+        while(current.next.next != null){
+            current = current.next;
+        }
+        current.next = null;
         size--;
     }
 
@@ -128,7 +144,7 @@ public class LinkedList<T> {
         return size == 0;
     }
 
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         LinkedList<String> list = new LinkedList<>();
         list.add("1.A");
         list.add("2.B");
@@ -140,5 +156,16 @@ public class LinkedList<T> {
         list.display();
         list.remove("2.B");
         list.display();
+    }
+
+    public void set(int i, T data) {
+        if (i < 0 || i >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<T> current = head;
+        for (int j = 0; j < i; j++) {
+            current = current.next;
+        }
+        current.data = data;
     }
 }
