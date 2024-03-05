@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Stack<T> {
-    ArrayList<T> stack = new ArrayList<>();
+    private ArrayList<T> stack = new ArrayList<>();
     private int top, size;
 
     public Stack(int size) {
@@ -13,7 +13,7 @@ public class Stack<T> {
         if (top == size - 1) {
             throw new OverflowException();
         }
-        stack.add(data);
+        stack.add(data);//stack[++top] = data
         top++;
     }
 
@@ -21,7 +21,7 @@ public class Stack<T> {
         if (top == -1) {
             throw new UnderflowException();
         }
-        T data = stack.get(top);
+        T data = stack.get(top);//stack[top--]
         top--;
         return data;
     }
